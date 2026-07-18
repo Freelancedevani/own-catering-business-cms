@@ -10,6 +10,7 @@ import withdrawalReducer from '../features/withdrawals/withdrawalSlice';
 import financeReducer    from '../features/finance/financeSlice';
 import iningredientReducer from '../features/ingredients/ingredientSlice';
 import invoiceReducer from '../features/invoices/invoiceSlice';
+import calendarReducer from '../features/calendar/calendarSlice';
 
 export const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ export const store = configureStore({
     finance:     financeReducer,
     ingredients:  iningredientReducer,
     invoices:    invoiceReducer,
+    calendar:    calendarReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
 });

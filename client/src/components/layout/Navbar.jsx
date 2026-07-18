@@ -12,6 +12,7 @@ const PAGE_TITLES = {
   '/withdrawals': { title: 'Withdrawals',  subtitle: 'Salary & payment tracking' },
   '/finance':     { title: 'Finance',      subtitle: 'Cashflow & reports' },
   '/ingredients': { title: 'Menu',  subtitle: 'Manage your menu items' },
+  '/calendar':    { title: 'Calendar',     subtitle: 'Auspicious dates & events' },
 };
 
 // Sample notifications — replace with real data from your API/store

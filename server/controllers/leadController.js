@@ -33,6 +33,7 @@ exports.createLead = catchAsync(async (req, res, next) => {
 exports.getAllLeads = catchAsync(async (req, res, next) => {
   const {
     status, priority, eventType,
+    startDate, endDate,
     page = 1, limit = 10,
     sortBy = 'createdAt', order = 'desc',
   } = req.query;
@@ -41,6 +42,11 @@ exports.getAllLeads = catchAsync(async (req, res, next) => {
   if (status) filter.status = status;
   if (priority) filter.priority = priority;
   if (eventType) filter.eventType = eventType;
+  if (startDate || endDate) {
+    filter.eventDate = {};
+    if (startDate) filter.eventDate.$gte = new Date(startDate);
+    if (endDate) filter.eventDate.$lte = new Date(endDate);
+  }
 
   const skip = (Number(page) - 1) * Number(limit);
   const sortOrder = order === 'asc' ? 1 : -1;

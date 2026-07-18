@@ -57,6 +57,7 @@ app.use('/api/finance', require('./routes/financeRoutes'));
 app.use('/api/orders', require('./routes/orderRoutes'));
 app.use('/api/ingredient-prices', require('./routes/ingredientPriceRoutes'));
 app.use('/api/invoices', require('./routes/invoiceRoutes'));
+app.use('/api/auspicious-dates', require('./routes/auspiciousDateRoutes'));
 
 // Handle unmatched routes
 app.all('*', (req, res, next) => {
