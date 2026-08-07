@@ -73,14 +73,11 @@ const EVENT_TYPES = [
 ];
 
 const ORDER_STATUSES = [
-  { value: 'inquiry', label: 'Inquiry', color: 'gray' },
-  { value: 'quoted', label: 'Quoted', color: 'yellow' },
-  { value: 'confirmed', label: 'Confirmed', color: 'blue' },
-  { value: 'planning', label: 'Planning', color: 'purple' },
-  { value: 'ready', label: 'Ready', color: 'indigo' },
-  { value: 'in_progress', label: 'In Progress', color: 'orange' },
-  { value: 'completed', label: 'Completed', color: 'green' },
-  { value: 'cancelled', label: 'Cancelled', color: 'red' },
+  { value: 'confirmed',   label: 'Confirmed',          color: 'purple' },
+  { value: 'agreement',   label: 'Agreement Completed', color: 'blue'   },
+  { value: 'in_progress', label: 'In Progress',        color: 'yellow' },
+  { value: 'completed',   label: 'Completed',          color: 'green'  },
+  { value: 'cancelled',   label: 'Cancelled',          color: 'red'    },
 ];
 
 const PAYMENT_STATUSES = [
@@ -118,14 +115,11 @@ const ORDER_EXPENSE_CATEGORIES = [
 ];
 
 const NEXT_STATUSES = {
-  inquiry: ['quoted', 'confirmed', 'cancelled'],
-  quoted: ['confirmed', 'cancelled'],
-  confirmed: ['planning', 'cancelled'],
-  planning: ['ready', 'cancelled'],
-  ready: ['in_progress', 'cancelled'],
+  confirmed:   ['agreement', 'cancelled'],
+  agreement:   ['in_progress', 'cancelled'],
   in_progress: ['completed', 'cancelled'],
-  completed: [],
-  cancelled: [],
+  completed:   [],
+  cancelled:   [],
 };
 
 // ─────────────────────────────────────────────
@@ -768,7 +762,7 @@ export default function OrdersPage() {
             {s.label}
             {s.value && (
               <span className="ml-1.5 bg-white/30 rounded-full px-1.5 py-0.5">
-                {stats?.[s.value === 'in_progress' ? 'inProgress' : s.value] || 0}
+                {stats?.[s.value] || 0}
               </span>
             )}
           </button>

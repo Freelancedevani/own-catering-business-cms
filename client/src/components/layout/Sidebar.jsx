@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import {
   FiHome, FiUsers, FiUserCheck, FiShoppingBag,
   FiTrendingUp, FiClipboard,
-  FiLogOut, FiX, FiBookOpen, FiUser, FiCalendar,
+  FiLogOut, FiX, FiBookOpen, FiUser, FiCalendar, FiPhoneCall,
 } from 'react-icons/fi';
 import { logoutUser } from '../../features/auth/authSlice';
 import { useAuth } from '../../hooks/useAuth';
@@ -19,7 +19,8 @@ const NAV_ITEMS = [
   { path: '/staff',       label: 'Staff',       icon: FiUsers       },
   { path: '/finance',     label: 'Finance',     icon: FiTrendingUp  },
   { path: '/ingredients', label: 'Menu Items',  icon: FiBookOpen    },
-  { path: '/calendar',    label: 'Calendar',    icon: FiCalendar    },
+  { path: '/calendar',    label: 'Calendar',     icon: FiCalendar    },
+  { path: '/contacts',    label: 'Contact Book', icon: FiPhoneCall   },
 ];
 
 export default function Sidebar({ isOpen, onClose }) {

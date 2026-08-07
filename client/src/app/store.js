@@ -8,9 +8,10 @@ import staffWalletReducer from '../features/staff/staffWalletSlice';
 import orderReducer      from '../features/orders/orderSlice';
 import withdrawalReducer from '../features/withdrawals/withdrawalSlice';
 import financeReducer    from '../features/finance/financeSlice';
-import iningredientReducer from '../features/ingredients/ingredientSlice';
+import menuReducer from '../features/menu/menuSlice';
 import invoiceReducer from '../features/invoices/invoiceSlice';
 import calendarReducer from '../features/calendar/calendarSlice';
+import contactBookReducer from '../features/contacts/contactBookSlice';
 
 export const store = configureStore({
   reducer: {
@@ -23,9 +24,10 @@ export const store = configureStore({
     orders:      orderReducer,
     withdrawals: withdrawalReducer,
     finance:     financeReducer,
-    ingredients:  iningredientReducer,
+    menu:         menuReducer,
     invoices:    invoiceReducer,
     calendar:    calendarReducer,
+    contacts:    contactBookReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
 });

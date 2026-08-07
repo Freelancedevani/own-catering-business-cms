@@ -66,6 +66,11 @@ exports.createLeadValidator = [
     .isIn(['website', 'phone', 'referral', 'social_media', 'walk_in', 'other'])
     .withMessage('Invalid source'),
 
+  body('address.street').optional().trim(),
+  body('address.city').optional().trim(),
+  body('address.state').optional().trim(),
+  body('address.pincode').optional().trim(),
+
   handleValidation,
 ];
 
@@ -85,6 +90,28 @@ exports.updateLeadStatusValidator = [
     .trim()
     .isLength({ max: 2000 }).withMessage('Notes cannot exceed 2000 characters'),
 
+  handleValidation,
+];
+
+exports.updateLeadValidator = [
+  body('name').optional().trim().isLength({ min: 2, max: 100 }).withMessage('Name must be 2–100 characters'),
+  body('email').optional().trim().isEmail().withMessage('Invalid email').normalizeEmail(),
+  body('phone').optional().trim().isMobilePhone().withMessage('Invalid phone number'),
+  body('eventType').optional().isIn(['wedding','reception','engagement','conference','corporate','product_launch','baby_shower','funeral','birthday','anniversary','social_gathering','other']).withMessage('Invalid event type'),
+  body('eventDate').optional().isISO8601().withMessage('Invalid date'),
+  body('guestCount').optional().isInt({ min: 1, max: 100000 }).withMessage('Invalid guest count'),
+  body('location').optional().trim(),
+  body('budget').optional().isFloat({ min: 0 }).withMessage('Budget must be positive'),
+  body('message').optional().trim().isLength({ max: 1000 }),
+  body('source').optional().isIn(['website','phone','referral','social_media','walk_in','other']).withMessage('Invalid source'),
+  body('status').optional().isIn(['new','contacted','qualified','converted','lost']).withMessage('Invalid status'),
+  body('priority').optional().isIn(['low','medium','high']).withMessage('Invalid priority'),
+  body('adminNotes').optional().trim().isLength({ max: 2000 }),
+  body('followUpDate').optional({ nullable: true, checkFalsy: true }).isISO8601().withMessage('Invalid follow-up date'),
+  body('address.street').optional().trim(),
+  body('address.city').optional().trim(),
+  body('address.state').optional().trim(),
+  body('address.pincode').optional().trim(),
   handleValidation,
 ];
 

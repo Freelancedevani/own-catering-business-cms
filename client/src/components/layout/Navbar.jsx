@@ -13,6 +13,7 @@ const PAGE_TITLES = {
   '/finance':     { title: 'Finance',      subtitle: 'Cashflow & reports' },
   '/ingredients': { title: 'Menu',  subtitle: 'Manage your menu items' },
   '/calendar':    { title: 'Calendar',     subtitle: 'Auspicious dates & events' },
+  '/contacts':    { title: 'Contact Book', subtitle: 'All contacts in one place' },
 };
 
 // Sample notifications — replace with real data from your API/store

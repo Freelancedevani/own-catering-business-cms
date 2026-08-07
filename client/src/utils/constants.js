@@ -14,14 +14,11 @@ export const EVENT_TYPES = [
 ];
 
 export const ORDER_STATUSES = [
-  { value: 'inquiry',      label: 'Inquiry',      color: 'gray'   },
-  { value: 'quoted',       label: 'Quoted',       color: 'blue'   },
-  { value: 'confirmed',    label: 'Confirmed',    color: 'purple' },
-  { value: 'planning',     label: 'Planning',     color: 'yellow' },
-  { value: 'ready',        label: 'Ready',        color: 'blue'   },
-  { value: 'in_progress',  label: 'In Progress',  color: 'yellow' },
-  { value: 'completed',    label: 'Completed',    color: 'green'  },
-  { value: 'cancelled',    label: 'Cancelled',    color: 'red'    },
+  { value: 'confirmed',   label: 'Confirmed',          color: 'purple' },
+  { value: 'agreement',   label: 'Agreement Completed', color: 'blue'   },
+  { value: 'in_progress', label: 'In Progress',        color: 'yellow' },
+  { value: 'completed',   label: 'Completed',          color: 'green'  },
+  { value: 'cancelled',   label: 'Cancelled',          color: 'red'    },
 ];
 
 export const LEAD_STATUSES = [

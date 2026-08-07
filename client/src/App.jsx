@@ -14,8 +14,9 @@ import WithdrawalsPage from './pages/withdrawals/WithdrawalsPage';
 import FinancePage     from './pages/finance/FinancePage';
 import DashboardLayout from './components/layout/DashboardLayout';
 import Loader          from './components/ui/Loader';
-import IngredientPage  from './pages/ingredients/IngredientPage';
+import MenuPage from './pages/menu/MenuPage';
 import CalendarPage from './pages/calendar/CalendarPage';
+import ContactBookPage from './pages/contacts/ContactBookPage';
 
 const ProtectedRoute = ({ children }) => {
   const { user, isChecking } = useSelector((s) => s.auth);
@@ -62,8 +63,9 @@ export default function App() {
           <Route path="staff"       element={<StaffPage />}       />
           <Route path="withdrawals" element={<WithdrawalsPage />} />
           <Route path="finance"     element={<FinancePage />}     />
-          <Route path="ingredients" element={<IngredientPage />}  />
+          <Route path="ingredients" element={<MenuPage />}  />
           <Route path="calendar"    element={<CalendarPage />}    />
+          <Route path="contacts"    element={<ContactBookPage />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/dashboard" replace />} />

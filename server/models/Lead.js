@@ -96,7 +96,13 @@ const leadSchema = new mongoose.Schema({
   },
   convertedToOrder: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Order', // will link later in Phase 3
+    ref: 'Order',
+  },
+  address: {
+    street:  { type: String, trim: true, default: null },
+    city:    { type: String, trim: true, default: null },
+    state:   { type: String, trim: true, default: null },
+    pincode: { type: String, trim: true, default: null },
   },
 }, { timestamps: true });
 

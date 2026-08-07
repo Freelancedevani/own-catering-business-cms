@@ -28,8 +28,9 @@
     "hpp": "^0.2.3",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.2.3",
-    "multer": "^2.1.1",
-    "multer-storage-cloudinary": "^4.0.0"
+    "multer": "^2.2.0",
+    "multer-storage-cloudinary": "^4.0.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"

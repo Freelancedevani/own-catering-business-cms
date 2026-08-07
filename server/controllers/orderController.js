@@ -57,11 +57,8 @@ const creditStaffFeesForOrder = async (order, adminUserId) => {
 
 // ── Status transition map ──
 const TRANSITIONS = {
-  inquiry:     ['quoted', 'confirmed', 'cancelled'],
-  quoted:      ['confirmed', 'cancelled'],
-  confirmed:   ['planning', 'cancelled'],
-  planning:    ['ready', 'cancelled'],
-  ready:       ['in_progress', 'cancelled'],
+  confirmed:   ['agreement', 'cancelled'],
+  agreement:   ['in_progress', 'cancelled'],
   in_progress: ['completed', 'cancelled'],
   completed:   [],
   cancelled:   [],
@@ -69,12 +66,10 @@ const TRANSITIONS = {
 
 // ── Notification messages per status ──
 const STATUS_NOTIFICATION = {
-  confirmed:   (o) => ({ title: '✅ Order Confirmed',     body: `Order ${o.orderNumber} (${o.eventType}) has been confirmed.` }),
-  planning:    (o) => ({ title: '📋 Planning Started',    body: `Order ${o.orderNumber} (${o.eventType}) is now in planning.` }),
-  ready:       (o) => ({ title: '🟢 Order Ready',         body: `Order ${o.orderNumber} (${o.eventType}) is marked ready.` }),
-  in_progress: (o) => ({ title: '🚀 Event In Progress',   body: `Order ${o.orderNumber} (${o.eventType}) is now in progress!` }),
-  completed:   (o) => ({ title: '🎉 Order Completed',     body: `Order ${o.orderNumber} (${o.eventType}) is completed. Your fee has been credited.` }),
-  cancelled:   (o) => ({ title: '❌ Order Cancelled',     body: `Order ${o.orderNumber} (${o.eventType}) has been cancelled.` }),
+  agreement:   (o) => ({ title: '📋 Agreement Completed', body: `Order ${o.orderNumber} (${o.eventType}) agreement is completed.` }),
+  in_progress: (o) => ({ title: '🚀 Event In Progress',    body: `Order ${o.orderNumber} (${o.eventType}) is now in progress!` }),
+  completed:   (o) => ({ title: '🎉 Order Completed',      body: `Order ${o.orderNumber} (${o.eventType}) is completed. Your fee has been credited.` }),
+  cancelled:   (o) => ({ title: '❌ Order Cancelled',      body: `Order ${o.orderNumber} (${o.eventType}) has been cancelled.` }),
 };
 
 // ── Helper: notify all assigned staff on status change ──
@@ -216,7 +211,7 @@ exports.getOrderStats = catchAsync(async (req, res, next) => {
       ]),
       Order.countDocuments({
         eventDate: { $gte: now, $lte: monthEnd },
-        status:    { $in: ['confirmed', 'planning', 'ready', 'in_progress'] },
+        status:    { $in: ['confirmed', 'agreement', 'in_progress'] },
       }),
       Order.aggregate([{ $group: { _id: '$paymentStatus', count: { $sum: 1 } } }]),
       Order.aggregate([
@@ -229,7 +224,7 @@ exports.getOrderStats = catchAsync(async (req, res, next) => {
       ]),
       Order.find({
         eventDate: { $gte: now, $lte: monthEnd },
-        status: { $in: ['confirmed', 'planning', 'ready', 'in_progress'] },
+        status: { $in: ['confirmed', 'agreement', 'in_progress'] },
       })
         .populate('client', 'name')
         .sort({ eventDate: 1 })
@@ -249,12 +244,9 @@ exports.getOrderStats = catchAsync(async (req, res, next) => {
     data: {
       total:             Object.values(counts).reduce((s, c) => s + c, 0),
       totalOrders:       Object.values(counts).reduce((s, c) => s + c, 0),
-      inquiry:           counts.inquiry     || 0,
-      quoted:            counts.quoted      || 0,
       confirmed:         counts.confirmed   || 0,
-      planning:          counts.planning    || 0,
-      ready:             counts.ready       || 0,
-      inProgress:        counts.in_progress || 0,
+      agreement:         counts.agreement   || 0,
+      in_progress:       counts.in_progress || 0,
       completed:         counts.completed   || 0,
       cancelled:         counts.cancelled   || 0,
       upcomingThisMonth: upcoming,

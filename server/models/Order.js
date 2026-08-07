@@ -116,8 +116,8 @@ const orderSchema = new mongoose.Schema({
   // ── Status ──
   status: {
     type:    String,
-    enum:    ['inquiry', 'quoted', 'confirmed', 'planning', 'ready', 'in_progress', 'completed', 'cancelled'],
-    default: 'inquiry',
+    enum:    ['confirmed', 'agreement', 'in_progress', 'completed', 'cancelled'],
+    default: 'confirmed',
   },
 
   // ── Source ──

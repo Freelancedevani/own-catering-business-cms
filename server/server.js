@@ -55,9 +55,10 @@ app.use('/api/staff', require('./routes/staffRoutes'));
 app.use('/api/withdrawals', require('./routes/withdrawalRoutes'));
 app.use('/api/finance', require('./routes/financeRoutes'));
 app.use('/api/orders', require('./routes/orderRoutes'));
-app.use('/api/ingredient-prices', require('./routes/ingredientPriceRoutes'));
+app.use('/api/menu', require('./routes/menuRoutes'));
 app.use('/api/invoices', require('./routes/invoiceRoutes'));
 app.use('/api/auspicious-dates', require('./routes/auspiciousDateRoutes'));
+app.use('/api/contacts', require('./routes/contactBookRoutes'));
 
 // Handle unmatched routes
 app.all('*', (req, res, next) => {

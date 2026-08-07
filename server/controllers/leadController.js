@@ -1,6 +1,7 @@
 const Lead = require('../models/Lead');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/AppError');
+const { upsertContact } = require('./contactBookController');
 
 // -----------------------------------------------
 // @POST /api/leads
@@ -10,14 +11,16 @@ exports.createLead = catchAsync(async (req, res, next) => {
   const {
     name, email, phone, eventType,
     eventDate, guestCount, location,
-    budget, message, source,
+    budget, message, source, address,
   } = req.body;
 
   const lead = await Lead.create({
     name, email, phone, eventType,
     eventDate, guestCount, location,
-    budget, message, source,
+    budget, message, source, address,
   });
+
+  upsertContact({ name, phone, source: 'lead', sourceRef: lead._id }).catch(() => {});
 
   res.status(201).json({
     success: true,
@@ -92,19 +95,35 @@ exports.getLeadById = catchAsync(async (req, res, next) => {
 });
 
 // -----------------------------------------------
-// @PATCH /api/leads/:id/status
+// @PUT /api/leads/:id  — full update
 // @access Admin only
 // -----------------------------------------------
-exports.updateLeadStatus = catchAsync(async (req, res, next) => {
-  const { status, priority, adminNotes, assignedTo } = req.body;
+exports.updateLead = catchAsync(async (req, res, next) => {
+  const {
+    name, email, phone, eventType, eventDate, guestCount,
+    location, budget, message, source,
+    status, priority, adminNotes, assignedTo, followUpDate, address,
+  } = req.body;
 
   const lead = await Lead.findById(req.params.id);
   if (!lead) return next(new AppError('Lead not found', 404));
 
-  if (status) lead.status = status;
-  if (priority) lead.priority = priority;
-  if (adminNotes) lead.adminNotes = adminNotes;
-  if (assignedTo) lead.assignedTo = assignedTo;
+  if (name       !== undefined) lead.name       = name;
+  if (email      !== undefined) lead.email      = email;
+  if (phone      !== undefined) lead.phone      = phone;
+  if (eventType  !== undefined) lead.eventType  = eventType;
+  if (eventDate  !== undefined) lead.eventDate  = eventDate;
+  if (guestCount !== undefined) lead.guestCount = guestCount;
+  if (location   !== undefined) lead.location   = location;
+  if (budget     !== undefined) lead.budget     = budget;
+  if (message    !== undefined) lead.message    = message;
+  if (source     !== undefined) lead.source     = source;
+  if (status     !== undefined) lead.status     = status;
+  if (priority   !== undefined) lead.priority   = priority;
+  if (adminNotes !== undefined) lead.adminNotes = adminNotes;
+  if (assignedTo !== undefined) lead.assignedTo = assignedTo;
+  if (followUpDate !== undefined) lead.followUpDate = followUpDate || null;
+  if (address    !== undefined) lead.address    = address;
 
   await lead.save();
 
@@ -174,24 +193,5 @@ exports.getLeadStats = catchAsync(async (req, res, next) => {
   });
 });
 
-// @PATCH /api/leads/:id/status
-exports.updateLeadStatus = catchAsync(async (req, res, next) => {
-  const { status, priority, adminNotes, assignedTo, followUpDate } = req.body;
-
-  const lead = await Lead.findById(req.params.id);
-  if (!lead) return next(new AppError('Lead not found', 404));
-
-  if (status)      lead.status     = status;
-  if (priority)    lead.priority   = priority;
-  if (adminNotes !== undefined) lead.adminNotes = adminNotes;
-  if (assignedTo)  lead.assignedTo = assignedTo;
-  if (followUpDate !== undefined) lead.followUpDate = followUpDate || null;
-
-  await lead.save();
-
-  res.status(200).json({
-    success: true,
-    message: 'Lead updated successfully',
-    data: { lead },
-  });
-});
+// @PATCH /api/leads/:id/status — kept for backward compat, delegates to updateLead
+exports.updateLeadStatus = exports.updateLead;

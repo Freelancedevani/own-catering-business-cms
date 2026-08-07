@@ -1,32 +1,30 @@
-// server/models/IngredientPrice.js
 const mongoose = require('mongoose');
 
-const ingredientPriceSchema = new mongoose.Schema(
+const menuItemSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
       trim: true,
-      unique: true, // e.g., "Vetki", "Rice", "Chicken"
     },
     category: {
       type: String,
-      enum: ['fish', 'meat', 'vegetable', 'grain', 'dairy', 'spice', 'other'],
-      default: 'other',
+      enum: ['starter', 'maincourse', 'dessert'],
+      default: 'maincourse',
     },
     unit: {
       type: String,
       enum: ['piece', 'gram', 'kg', 'litre', 'ml'],
-      required: true, // e.g., "piece" for Vetki, "kg" for Rice
+      default: 'piece',
     },
     pricePerUnit: {
       type: Number,
       required: true,
-      min: 0, // price in ₹ per unit
+      min: 0,
     },
     notes: {
       type: String,
-      trim: true, // e.g., "Market rate, updated weekly"
+      trim: true,
     },
     isActive: {
       type: Boolean,
@@ -40,4 +38,5 @@ const ingredientPriceSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('IngredientPrice', ingredientPriceSchema);
+// Keep collection name as 'ingredientprices' to avoid data loss
+module.exports = mongoose.model('MenuItem', menuItemSchema, 'menuitems');

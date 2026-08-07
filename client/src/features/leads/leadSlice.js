@@ -40,6 +40,19 @@ export const updateLeadStatus = createAsyncThunk(
   }
 );
 
+export const updateLead = createAsyncThunk(
+  'leads/update',
+  async ({ id, payload }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.put(`/leads/${id}`, payload);
+      toast.success('Lead updated successfully!');
+      return data.data.lead;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message);
+    }
+  }
+);
+
 export const deleteLead = createAsyncThunk(
   'leads/delete',
   async (id, { rejectWithValue }) => {
@@ -87,6 +100,15 @@ const leadSlice = createSlice({
         const idx = s.leads.findIndex((l) => l._id === a.payload._id);
         if (idx !== -1) s.leads[idx] = a.payload;
       })
+
+      // Full update
+      .addCase(updateLead.pending,   (s) => { s.isSubmitting = true; })
+      .addCase(updateLead.fulfilled, (s, a) => {
+        s.isSubmitting = false;
+        const idx = s.leads.findIndex((l) => l._id === a.payload._id);
+        if (idx !== -1) s.leads[idx] = a.payload;
+      })
+      .addCase(updateLead.rejected,  (s) => { s.isSubmitting = false; })
 
       // Delete
       .addCase(deleteLead.fulfilled, (s, a) => {

@@ -1,4 +1,3 @@
-// server/validators/ingredientPriceValidator.js
 const { body, validationResult } = require('express-validator');
 
 const handleValidation = (req, res, next) => {
@@ -13,7 +12,7 @@ const handleValidation = (req, res, next) => {
   next();
 };
 
-exports.createIngredientValidator = [
+exports.createMenuValidator = [
   body('name')
     .trim()
     .notEmpty().withMessage('Name is required')
@@ -21,13 +20,8 @@ exports.createIngredientValidator = [
 
   body('category')
     .optional()
-    .isIn(['fish', 'meat', 'vegetable', 'grain', 'dairy', 'spice', 'other'])
+    .isIn(['starter', 'maincourse', 'dessert'])
     .withMessage('Invalid category'),
-
-  body('unit')
-    .notEmpty().withMessage('Unit is required')
-    .isIn(['piece', 'gram', 'kg', 'litre', 'ml'])
-    .withMessage('Invalid unit'),
 
   body('pricePerUnit')
     .notEmpty().withMessage('Price is required')
@@ -41,7 +35,7 @@ exports.createIngredientValidator = [
   handleValidation,
 ];
 
-exports.updateIngredientValidator = [
+exports.updateMenuValidator = [
   body('name')
     .optional()
     .trim()
@@ -49,13 +43,8 @@ exports.updateIngredientValidator = [
 
   body('category')
     .optional()
-    .isIn(['fish', 'meat', 'vegetable', 'grain', 'dairy', 'spice', 'other'])
+    .isIn(['starter', 'maincourse', 'dessert'])
     .withMessage('Invalid category'),
-
-  body('unit')
-    .optional()
-    .isIn(['piece', 'gram', 'kg', 'litre', 'ml'])
-    .withMessage('Invalid unit'),
 
   body('pricePerUnit')
     .optional()

@@ -2,6 +2,7 @@ const Client = require('../models/Client');
 const Lead = require('../models/Lead');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/AppError');
+const { upsertContact } = require('./contactBookController');
 
 // -----------------------------------------------
 // @POST /api/clients
@@ -12,6 +13,8 @@ exports.createClient = catchAsync(async (req, res, next) => {
   if (existingClient) return next(new AppError('Client with this email already exists', 400));
 
   const client = await Client.create(req.body);
+
+  upsertContact({ name: client.name, phone: client.phone, source: 'client', sourceRef: client._id }).catch(() => {});
 
   res.status(201).json({
     success: true,
@@ -45,6 +48,8 @@ exports.convertLeadToClient = catchAsync(async (req, res, next) => {
     adminNotes: lead.adminNotes || '',
     clientType: lead.eventType === 'corporate' ? 'corporate' : 'individual',
   });
+
+  upsertContact({ name: client.name, phone: client.phone, source: 'client', sourceRef: client._id }).catch(() => {});
 
   // ✅ Delete the lead after successful conversion (no longer needed)
   await lead.deleteOne();
