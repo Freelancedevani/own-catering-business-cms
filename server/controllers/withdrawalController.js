@@ -2,6 +2,7 @@ const Withdrawal = require('../models/Withdrawal');
 const Staff      = require('../models/Staff');
 const catchAsync = require('../utils/catchAsync');
 const AppError   = require('../utils/AppError');
+const { createNotification } = require('../utils/notificationService');
 
 // -----------------------------------------------
 // @POST /api/withdrawals
@@ -43,6 +44,13 @@ exports.createWithdrawal = catchAsync(async (req, res, next) => {
 
   const populated = await Withdrawal.findById(withdrawal._id)
     .populate('staff', 'name employeeId role phone');
+
+  await createNotification(
+    '💸 New Withdrawal Request',
+    `Withdrawal of ₹${withdrawal.amount} created for ${populated.staff.name}.`,
+    'withdrawal',
+    '/withdrawals'
+  );
 
   res.status(201).json({
     success: true,
@@ -167,6 +175,13 @@ exports.updateWithdrawalStatus = catchAsync(async (req, res, next) => {
   const populated = await Withdrawal.findById(withdrawal._id)
     .populate('staff', 'name employeeId role')
     .populate('approvedBy', 'name');
+
+  await createNotification(
+    status === 'paid' ? '✅ Withdrawal Paid' : status === 'approved' ? '👍 Withdrawal Approved' : '❌ Withdrawal Rejected',
+    `Withdrawal of ₹${withdrawal.amount} for ${populated.staff.name} is ${status}.`,
+    'withdrawal',
+    '/withdrawals'
+  );
 
   res.status(200).json({
     success: true,

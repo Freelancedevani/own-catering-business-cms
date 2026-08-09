@@ -5,7 +5,7 @@ const Client      = require('../models/Client');
 const catchAsync  = require('../utils/catchAsync');
 const AppError    = require('../utils/AppError');
 const { autoCreateOrderTransaction } = require('../utils/financeHelper');
-const { notifyStaff, notifyMultipleStaff } = require('../utils/notificationService');
+const { notifyStaff, notifyMultipleStaff, createNotification } = require('../utils/notificationService');
 
 // ── Expense category → Transaction category map ──
 const EXPENSE_CATEGORY_MAP = {
@@ -321,6 +321,13 @@ exports.createOrder = catchAsync(async (req, res, next) => {
     );
   }
 
+  await createNotification(
+    '📋 New Order Created',
+    `Order ${order.orderNumber} (${order.eventType}) has been created.`,
+    'order',
+    `/orders`
+  );
+
   res.status(201).json({
     success: true,
     message: 'Order created successfully',
@@ -357,8 +364,12 @@ exports.updateOrder = catchAsync(async (req, res, next) => {
   await order.save();
 
   if (status && status !== prevStatus) {
-    // ✅ Notify assigned staff about status change
     await notifyAssignedStaffOnStatusChange(order, status);
+    const notif = STATUS_NOTIFICATION[status];
+    if (notif) {
+      const { title, body } = notif(order);
+      await createNotification(title, body, 'order', `/orders`);
+    }
 
     if (status === 'completed') {
       await creditStaffFeesForOrder(order, req.user.id);
@@ -409,6 +420,11 @@ exports.updateOrderStatus = catchAsync(async (req, res, next) => {
 
   // ✅ Notify assigned staff about status change
   await notifyAssignedStaffOnStatusChange(order, status);
+  const notif = STATUS_NOTIFICATION[status];
+  if (notif) {
+    const { title, body } = notif(order);
+    await createNotification(title, body, 'order', `/orders`);
+  }
 
   if (status === 'completed' && prevStatus !== 'completed') {
     await creditStaffFeesForOrder(order, req.user.id);

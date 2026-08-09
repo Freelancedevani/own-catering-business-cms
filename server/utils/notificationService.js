@@ -1,5 +1,15 @@
 const admin = require('../config/firebase');
 const Staff = require('../models/Staff');
+const Notification = require('../models/Notification');
+
+// ─── Create in-app web notification ──────────────
+const createNotification = async (title, message, type = 'general', link = null) => {
+  try {
+    await Notification.create({ title, message, type, link });
+  } catch (err) {
+    console.error('[Notification] createNotification error:', err);
+  }
+};
 
 // ─── Send to single staff member ─────────────────────────
 const notifyStaff = async (staffId, title, body, data = {}) => {
@@ -104,4 +114,4 @@ const notifyAllStaff = async (title, body, data = {}) => {
   }
 };
 
-module.exports = { notifyStaff, notifyMultipleStaff, notifyAllStaff };
+module.exports = { notifyStaff, notifyMultipleStaff, notifyAllStaff, createNotification };

@@ -12,22 +12,24 @@ import menuReducer from '../features/menu/menuSlice';
 import invoiceReducer from '../features/invoices/invoiceSlice';
 import calendarReducer from '../features/calendar/calendarSlice';
 import contactBookReducer from '../features/contacts/contactBookSlice';
+import notificationReducer from '../features/notifications/notificationSlice';
 
 export const store = configureStore({
   reducer: {
-    auth:        authReducer,
-    dashboard:   dashboardReducer,
-    leads:       leadReducer,
-    clients:     clientReducer,
-    staff:       staffReducer,
-    staffWallet: staffWalletReducer,
-    orders:      orderReducer,
-    withdrawals: withdrawalReducer,
-    finance:     financeReducer,
-    menu:         menuReducer,
-    invoices:    invoiceReducer,
-    calendar:    calendarReducer,
-    contacts:    contactBookReducer,
+    auth:          authReducer,
+    dashboard:     dashboardReducer,
+    leads:         leadReducer,
+    clients:       clientReducer,
+    staff:         staffReducer,
+    staffWallet:   staffWalletReducer,
+    orders:        orderReducer,
+    withdrawals:   withdrawalReducer,
+    finance:       financeReducer,
+    menu:          menuReducer,
+    invoices:      invoiceReducer,
+    calendar:      calendarReducer,
+    contacts:      contactBookReducer,
+    notifications: notificationReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
 });

@@ -2,6 +2,7 @@ const Lead = require('../models/Lead');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/AppError');
 const { upsertContact } = require('./contactBookController');
+const { createNotification } = require('../utils/notificationService');
 
 // -----------------------------------------------
 // @POST /api/leads
@@ -21,6 +22,13 @@ exports.createLead = catchAsync(async (req, res, next) => {
   });
 
   upsertContact({ name, phone, source: 'lead', sourceRef: lead._id }).catch(() => {});
+
+  createNotification(
+    '📌 New Lead Received',
+    `${name} submitted an inquiry for ${eventType || 'an event'}.`,
+    'lead',
+    '/leads'
+  ).catch(() => {});
 
   res.status(201).json({
     success: true,
