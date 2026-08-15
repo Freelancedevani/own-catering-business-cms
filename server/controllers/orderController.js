@@ -57,7 +57,7 @@ const creditStaffFeesForOrder = async (order, adminUserId) => {
 
 // ── Status transition map ──
 const TRANSITIONS = {
-  confirmed:   ['agreement', 'cancelled'],
+  confirmed:   ['agreement', 'in_progress', 'cancelled'],
   agreement:   ['in_progress', 'cancelled'],
   in_progress: ['completed', 'cancelled'],
   completed:   [],

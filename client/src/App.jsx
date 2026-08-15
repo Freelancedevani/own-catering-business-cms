@@ -15,6 +15,7 @@ import FinancePage     from './pages/finance/FinancePage';
 import DashboardLayout from './components/layout/DashboardLayout';
 import Loader          from './components/ui/Loader';
 import MenuPage from './pages/menu/MenuPage';
+import QuotationPage from './pages/quotation/QuotationPage';
 import CalendarPage from './pages/calendar/CalendarPage';
 import ContactBookPage from './pages/contacts/ContactBookPage';
 
@@ -64,6 +65,7 @@ export default function App() {
           <Route path="withdrawals" element={<WithdrawalsPage />} />
           <Route path="finance"     element={<FinancePage />}     />
           <Route path="ingredients" element={<MenuPage />}  />
+          <Route path="quotation"   element={<QuotationPage />}  />
           <Route path="calendar"    element={<CalendarPage />}    />
           <Route path="contacts"    element={<ContactBookPage />} />
         </Route>

@@ -59,6 +59,7 @@ app.use('/api/menu', require('./routes/menuRoutes'));
 app.use('/api/invoices', require('./routes/invoiceRoutes'));
 app.use('/api/auspicious-dates', require('./routes/auspiciousDateRoutes'));
 app.use('/api/contacts', require('./routes/contactBookRoutes'));
+app.use('/api/quotation', require('./routes/quotationRoutes'));
 
 // Handle unmatched routes
 app.all('*', (req, res, next) => {

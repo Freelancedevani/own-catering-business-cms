@@ -13,6 +13,7 @@ import invoiceReducer from '../features/invoices/invoiceSlice';
 import calendarReducer from '../features/calendar/calendarSlice';
 import contactBookReducer from '../features/contacts/contactBookSlice';
 import notificationReducer from '../features/notifications/notificationSlice';
+import quotationReducer from '../features/quotation/quotationSlice';
 
 export const store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ export const store = configureStore({
     calendar:      calendarReducer,
     contacts:      contactBookReducer,
     notifications: notificationReducer,
+    quotation:     quotationReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
 });

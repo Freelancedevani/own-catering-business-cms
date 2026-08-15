@@ -9,16 +9,18 @@ export const EVENT_TYPES = [
   { value: 'product_launch',   label: 'Product Launch' },
   { value: 'social_gathering', label: 'Social Gathering' },
   { value: 'baby_shower',      label: 'Baby Shower' },
+  { value: 'griho_prabesh',    label: 'Griho Prabesh' },
+  { value: 'puja',             label: 'Puja' },
   { value: 'funeral',          label: 'Funeral' },
   { value: 'other',            label: 'Other' },
 ];
 
 export const ORDER_STATUSES = [
-  { value: 'confirmed',   label: 'Confirmed',          color: 'purple' },
+  { value: 'confirmed',   label: 'Confirmed',           color: 'purple' },
   { value: 'agreement',   label: 'Agreement Completed', color: 'blue'   },
-  { value: 'in_progress', label: 'In Progress',        color: 'yellow' },
-  { value: 'completed',   label: 'Completed',          color: 'green'  },
-  { value: 'cancelled',   label: 'Cancelled',          color: 'red'    },
+  { value: 'in_progress', label: 'In Progress',         color: 'yellow' },
+  { value: 'completed',   label: 'Completed',           color: 'green'  },
+  { value: 'cancelled',   label: 'Cancelled',           color: 'red'    },
 ];
 
 export const LEAD_STATUSES = [

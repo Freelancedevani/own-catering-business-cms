@@ -8,7 +8,7 @@ export const fetchMenuItems = createAsyncThunk(
     try {
       const query = params.category ? `?category=${params.category}` : '';
       const res = await api.get(`/menu${query}`);
-      return res.data.data.ingredients;
+      return res.data.data.items;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || 'Failed to fetch menu items');
     }
@@ -20,7 +20,7 @@ export const createMenuItem = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const res = await api.post('/menu', formData);
-      return res.data.data.ingredient;
+      return res.data.data.item;
     } catch (err) {
       return rejectWithValue(err.response?.data?.errors || err.response?.data?.message);
     }
@@ -32,7 +32,7 @@ export const updateMenuItem = createAsyncThunk(
   async ({ id, formData }, { rejectWithValue }) => {
     try {
       const res = await api.patch(`/menu/${id}`, formData);
-      return res.data.data.ingredient;
+      return res.data.data.item;
     } catch (err) {
       return rejectWithValue(err.response?.data?.errors || err.response?.data?.message);
     }

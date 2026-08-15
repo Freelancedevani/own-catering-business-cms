@@ -15,7 +15,7 @@ const handleValidation = (req, res, next) => {
 const EVENT_TYPES = [
   'wedding','reception','engagement','birthday','anniversary','riceceremony',
   'corporate','conference','product_launch','social_gathering',
-  'baby_shower','funeral','other'
+  'baby_shower','griho_prabesh','puja','funeral','other'
 ];
 
 exports.createOrderValidator = [
@@ -69,7 +69,7 @@ exports.createOrderValidator = [
 
   body('discountType')
     .optional()
-    .isIn(['percentage','fixed']).withMessage('Invalid discount type'),
+    .isIn(['none','percentage','fixed']).withMessage('Invalid discount type'),
 
   body('discountValue')
     .optional()

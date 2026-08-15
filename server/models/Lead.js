@@ -36,6 +36,8 @@ const leadSchema = new mongoose.Schema({
       'other',
       'product_launch',
       'baby_shower',
+      'griho_prabesh',
+      'puja',
       'reception',
       'engagement',
       'conference',

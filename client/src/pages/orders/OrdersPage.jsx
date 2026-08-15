@@ -68,6 +68,8 @@ const EVENT_TYPES = [
   { value: 'product_launch', label: 'Product Launch' },
   { value: 'social_gathering', label: 'Social Gathering' },
   { value: 'baby_shower', label: 'Baby Shower' },
+  { value: 'griho_prabesh', label: 'Griho Prabesh' },
+  { value: 'puja', label: 'Puja' },
   { value: 'funeral', label: 'Funeral' },
   { value: 'other', label: 'Other' },
 ];
@@ -115,7 +117,7 @@ const ORDER_EXPENSE_CATEGORIES = [
 ];
 
 const NEXT_STATUSES = {
-  confirmed:   ['agreement', 'cancelled'],
+  confirmed:   ['agreement', 'in_progress', 'cancelled'],
   agreement:   ['in_progress', 'cancelled'],
   in_progress: ['completed', 'cancelled'],
   completed:   [],
